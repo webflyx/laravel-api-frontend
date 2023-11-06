@@ -9,6 +9,22 @@ use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
+
+    public function register(Request $request)
+    {
+
+        User::create($request->validate([
+            'name' => 'required|string|min:2|max:255',
+            'email' => 'required|email|unique:users,email',
+            'password' => 'required',
+        ]));
+
+        return response()->json([
+            'message' => 'New user registered successfully',
+        ]);
+
+    }
+
     public function login(Request $request)
     {
 

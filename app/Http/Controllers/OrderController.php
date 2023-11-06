@@ -8,6 +8,12 @@ use Illuminate\Http\Request;
 
 class OrderController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:sanctum')->except('index', 'show');
+        $this->authorizeResource(Order::class, 'order');
+        $this->middleware('throttle:api');
+    }
 
     public function index(Request $request)
     {
@@ -23,7 +29,7 @@ class OrderController extends Controller
                 'amount' => 'required|numeric|min:0.000000001',
                 'price' => 'required|numeric|min:0.000000001',
             ]),
-            'user_id' => 1,
+            'user_id' => auth()->user()->id,
         ]);
 
         return new OrderResource($order->load('user'));
