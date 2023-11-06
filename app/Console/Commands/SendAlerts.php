@@ -38,8 +38,10 @@ class SendAlerts extends Command
             $price_plus_10_percent = $price + ($price * 10 / 100);
 
             if ($price_plus_10_percent >= $order_price) {
-                $order->user()->notify(new ChangePriceNotification($order));
+                $order->user->notify(new ChangePriceNotification($order));
             }
         }
+
+        $this->info('All users successfully notified!');
     }
 }

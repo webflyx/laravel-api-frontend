@@ -8,7 +8,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ChangePriceNotification extends Notification
+class ChangePriceNotification extends Notification implements ShouldQueue
 {
     use Queueable;
 
@@ -40,7 +40,7 @@ class ChangePriceNotification extends Notification
         return (new MailMessage)
                     ->greeting("Hello {$this->order->user->name}!")
                     ->line('Alert: Price changed!')
-                    ->action('View Order', route('order.show', $this->order->id));
+                    ->action('View Order', route('orders.show', $this->order->id));
     }
 
     /**
