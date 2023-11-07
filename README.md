@@ -1,4 +1,5 @@
 <h2>Application features:</h2>
+<div>Here you can create/read/update/delete orders with your buy/sell cryptocurrency. Parse crypto prices and send alert users if price of coin increase more than 10%.</div>
 <ul>
 <li>Register User</li>
 <li>Login</li>
