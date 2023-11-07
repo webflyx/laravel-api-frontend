@@ -2,9 +2,9 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Order extends Model
 {
@@ -16,6 +16,17 @@ class Order extends Model
     protected $fillable = [
         'coin', 'type', 'amount', 'price', 'user_id'
     ];
+
+    protected static function booted(): void
+    {
+        static::deleted(function(Order $order){
+            cache()->forget('orders');
+        });
+        
+        static::deleted(function(Order $order){
+            cache()->forget('orders');
+        });
+    }
 
     public function user(): BelongsTo
     {

@@ -10,14 +10,17 @@ class OrderController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth:sanctum')->except('index', 'show');
+        $this->middleware('auth:sanctum');
         $this->authorizeResource(Order::class, 'order');
         $this->middleware('throttle:api');
     }
 
     public function index(Request $request)
     {
-        return OrderResource::collection(Order::with('user')->get());
+        $orders = auth()->user()->orders()->latest()->get();
+        $orders = cache()->remember('orders', 3600, fn () => $orders);
+
+        return OrderResource::collection($orders);
     }
 
     public function store(Request $request)

@@ -9,14 +9,14 @@ use Illuminate\Auth\Access\Response;
 class OrderPolicy
 {
  
-    public function viewAny(?User $user): bool
+    public function viewAny(User $user): bool
     {
         return true;
     }
 
-    public function view(?User $user, Order $order): bool
+    public function view(User $user, Order $order): bool
     {
-        return true;
+        return $user->id === $order->user_id;
     }
 
     public function create(User $user): bool
